@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'DiningJourney - Kuala Lumpur')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body>
     <header class="site-header">
         <nav class="navbar" aria-label="Main navigation">
@@ -26,14 +28,15 @@
                         <a class="login-button" href="{{ route('admin.dashboard') }}">Admin</a>
                     @endif
                     <div class="profile-menu" data-profile-menu>
-                        <button class="profile-menu-trigger" type="button" aria-label="Open profile menu for {{ auth()->user()->name }}" aria-expanded="false" aria-controls="profile-menu-dropdown">
-                            <img
-                                src="{{ auth()->user()->profile_photo_path ? \Illuminate\Support\Facades\Storage::disk('public')->url(auth()->user()->profile_photo_path) : asset('images/default-avatar.svg') }}"
-                                alt=""
-                            >
+                        <button class="profile-menu-trigger" type="button"
+                            aria-label="Open profile menu for {{ auth()->user()->name }}" aria-expanded="false"
+                            aria-controls="profile-menu-dropdown">
+                            <img src="{{ auth()->user()->profile_photo_path ? \Illuminate\Support\Facades\Storage::disk('public')->url(auth()->user()->profile_photo_path) : asset('images/default-avatar.svg') }}"
+                                alt="">
                             <span class="profile-menu-name">{{ auth()->user()->name }}</span>
                             <svg aria-hidden="true" viewBox="0 0 16 16" fill="none">
-                                <path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" />
                             </svg>
                         </button>
                         <div class="profile-menu-dropdown" id="profile-menu-dropdown" hidden>
@@ -61,9 +64,10 @@
 
     <footer class="footer">
         <div class="footer-brand">
-            <a class="brand" href="{{ route('home') }}"><span class="brand-mark" aria-hidden="true"></span><span>DiningJourney</span></a>
+            <a class="brand" href="{{ route('home') }}"><span class="brand-mark"
+                    aria-hidden="true"></span><span>DiningJourney</span></a>
             <p>Explore More. Eat Better.</p>
-            <small class="photo-credit">Hero photo cropped: <a href="https://commons.wikimedia.org/wiki/File:The_Twins_SE_Asia_2019_(49171985716).jpg" target="_blank" rel="noopener noreferrer">James Kerwin</a> · <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer">CC BY 2.0</a></small>
+            <small class="photo-credit">Created by Leyi and Zhan Foong </small>
             <small>© {{ now()->year }} DiningJourney. All rights reserved.</small>
         </div>
         <div class="footer-links">
@@ -88,4 +92,5 @@
         </div>
     </footer>
 </body>
+
 </html>
