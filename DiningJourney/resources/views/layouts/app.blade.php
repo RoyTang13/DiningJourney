@@ -19,20 +19,32 @@
                 <a href="{{ route('places.attractions') }}">Attractions</a>
                 <a href="{{ route('places.restaurants') }}">Restaurants</a>
                 <a href="{{ route('recommendations.index') }}">Recommendations</a>
-                @auth
-                    <a href="{{ route('favorites.index') }}">My Favourites</a>
-                    <a href="{{ route('profile.edit') }}">Profile</a>
-                @else
-                    <a href="{{ route('login') }}">Profile</a>
-                @endauth
             </div>
-            <div class="nav-actions">
+            <div class="nav-actions @auth has-profile-menu @endauth">
                 @auth
-                    <span class="nav-user">{{ auth()->user()->name }}</span>
-                    <form action="{{ route('logout') }}" method="post">
-                        @csrf
-                        <button class="login-button" type="submit">Logout</button>
-                    </form>
+                    @if (auth()->user()->isAdmin())
+                        <a class="login-button" href="{{ route('admin.dashboard') }}">Admin</a>
+                    @endif
+                    <div class="profile-menu" data-profile-menu>
+                        <button class="profile-menu-trigger" type="button" aria-label="Open profile menu for {{ auth()->user()->name }}" aria-expanded="false" aria-controls="profile-menu-dropdown">
+                            <img
+                                src="{{ auth()->user()->profile_photo_path ? \Illuminate\Support\Facades\Storage::disk('public')->url(auth()->user()->profile_photo_path) : asset('images/default-avatar.svg') }}"
+                                alt=""
+                            >
+                            <span class="profile-menu-name">{{ auth()->user()->name }}</span>
+                            <svg aria-hidden="true" viewBox="0 0 16 16" fill="none">
+                                <path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="profile-menu-dropdown" id="profile-menu-dropdown" hidden>
+                            <a href="{{ route('profile.edit') }}">My Profile</a>
+                            <a href="{{ route('favorites.index') }}">My Favourites</a>
+                            <form class="profile-menu-logout" action="{{ route('logout') }}" method="post">
+                                @csrf
+                                <button type="submit">Logout</button>
+                            </form>
+                        </div>
+                    </div>
                 @else
                     <a class="login-button" href="{{ route('login') }}">Login</a>
                     <a class="register-button" href="{{ route('register') }}">Register</a>

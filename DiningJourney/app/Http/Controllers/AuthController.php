@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\View\View;
@@ -111,7 +112,14 @@ class AuthController extends Controller
 
     public function profile(Request $request): View
     {
-        return view('profile', ['user' => $request->user()]);
+        $user = $request->user();
+
+        return view('profile', [
+            'user' => $user,
+            'profilePhotoUrl' => $user->profile_photo_path
+                ? Storage::disk('public')->url($user->profile_photo_path)
+                : asset('images/default-avatar.svg'),
+        ]);
     }
 
     public function updateProfile(Request $request): RedirectResponse

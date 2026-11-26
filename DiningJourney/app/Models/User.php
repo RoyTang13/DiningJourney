@@ -30,6 +30,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'boolean',
             'travel_interests' => 'array',
             'dining_interests' => 'array',
             'budget' => 'integer',
@@ -39,5 +40,10 @@ class User extends Authenticatable
     public function favoritePlaces(): BelongsToMany
     {
         return $this->belongsToMany(Place::class, 'favorites')->withTimestamps();
+    }
+
+    public function isAdmin(): bool
+    {
+        return (bool) $this->is_admin;
     }
 }
